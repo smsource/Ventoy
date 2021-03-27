@@ -56,6 +56,16 @@
 #define VTOY_PLAT_ARM64_UEFI    0x41413634
 #define VTOY_PLAT_X86_64_UEFI   0x55454649
 #define VTOY_PLAT_X86_LEGACY    0x42494f53
+#define VTOY_PLAT_MIPS_UEFI     0x4D495053
+
+#define VTOY_COMM_CPIO  "ventoy.cpio"
+#if defined(__arm__) || defined(__aarch64__)
+#define VTOY_ARCH_CPIO  "ventoy_arm64.cpio"
+#elif defined(__mips__)
+#define VTOY_ARCH_CPIO  "ventoy_mips64.cpio"
+#else
+#define VTOY_ARCH_CPIO  "ventoy_x86.cpio"
+#endif
 
 #define VTOY_PWD_CORRUPTED(err) \
 {\
@@ -65,6 +75,20 @@
     grub_exit(); \
     return (err);\
 }
+
+typedef enum VTOY_FILE_FLT
+{
+    VTOY_FILE_FLT_ISO = 0, /* .iso */
+    VTOY_FILE_FLT_WIM,     /* .wim */
+    VTOY_FILE_FLT_EFI,     /* .efi */
+    VTOY_FILE_FLT_IMG,     /* .img */
+    VTOY_FILE_FLT_VHD,     /* .vhd(x) */
+    VTOY_FILE_FLT_VTOY,    /* .vtoy */
+    
+    VTOY_FILE_FLT_BUTT
+}VTOY_FILE_FLT;
+
+#define FILE_FLT(type) (0 == g_vtoy_file_flt[VTOY_FILE_FLT_##type])
 
 typedef struct ventoy_initrd_ctx
 {
@@ -205,6 +229,7 @@ typedef struct img_iterator_node
     img_info **tail;
     char dir[400];
     int dirlen;
+    int level;
     int isocnt;
     int done;
     int select;

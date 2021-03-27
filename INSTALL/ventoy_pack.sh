@@ -8,6 +8,8 @@ fi
 
 dos2unix -q ./tool/ventoy_lib.sh
 dos2unix -q ./tool/VentoyWorker.sh
+dos2unix -q ./tool/WebDeepin.sh
+dos2unix -q ./tool/WebUos.sh
 
 . ./tool/ventoy_lib.sh
 
@@ -94,11 +96,15 @@ cp $OPT ./tool $tmpdir/
 rm -f $tmpdir/ENROLL_THIS_KEY_IN_MOKMANAGER.cer
 cp $OPT Ventoy2Disk.sh $tmpdir/
 cp $OPT VentoyWeb.sh $tmpdir/
+cp $OPT VentoyWebDeepin.sh $tmpdir/
+#cp $OPT Ventoy.desktop $tmpdir/
 cp $OPT README $tmpdir/
 cp $OPT plugin $tmpdir/
 cp $OPT CreatePersistentImg.sh $tmpdir/
 dos2unix -q $tmpdir/Ventoy2Disk.sh
 dos2unix -q $tmpdir/VentoyWeb.sh
+dos2unix -q $tmpdir/VentoyWebDeepin.sh
+#dos2unix -q $tmpdir/Ventoy.desktop
 dos2unix -q $tmpdir/CreatePersistentImg.sh
 
 cp $OPT ../LinuxGUI/WebUI $tmpdir/
@@ -130,6 +136,8 @@ find $tmpdir/ -type d -exec chmod 755 "{}" +
 find $tmpdir/ -type f -exec chmod 644 "{}" +
 chmod +x $tmpdir/Ventoy2Disk.sh
 chmod +x $tmpdir/VentoyWeb.sh
+chmod +x $tmpdir/VentoyWebDeepin.sh
+#chmod +x $tmpdir/Ventoy.desktop
 chmod +x $tmpdir/CreatePersistentImg.sh
 
 tar -czvf ventoy-${curver}-linux.tar.gz $tmpdir
